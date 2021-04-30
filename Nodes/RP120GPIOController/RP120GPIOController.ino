@@ -1,4 +1,3 @@
-#include "uipethernet-conf.h"
 #include <UIPEthernet.h>
 #include <EEPROM.h>
 #include <Url.h>
@@ -73,13 +72,17 @@ void setup() {
   server.begin();
   udp.begin(19522); 
 
-  //Wait for the Ethernet to initialise
-  delay(500);
+  
 
   //Try and connect to the Video Router
-    if(!videoHubClient.connected())
+  int retry = 10;
+    while(!videoHubClient.connected() && retry >0)
     {      
+      //Wait for the Ethernet to initialise
+      delay(1000);
+  
       videoHubClient.connect(settings.videoHubIP,9990);
+      retry --;
     }
 
   Serial.print(F("IP:"));
