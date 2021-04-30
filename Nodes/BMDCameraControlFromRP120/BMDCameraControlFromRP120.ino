@@ -3,6 +3,8 @@
 #include <Url.h>
 #include "PanasonicRP120Protocol.h"
 
+#define UNIT1 1
+
 #ifdef YUN
   #include <Bridge.h>
   #include <YunServer.h>
@@ -18,13 +20,18 @@
 // Enter a MAC address and IP address for your controller below.
 // The IP address will be dependent on your local network:
 //byte mac[] = { 0x5F, 0x53, 0x2F, 0x6C, 0xB1, 0xD0 };
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFA, 0xED };  
 
-//Unit 1
-//IPAddress ip(10, 10, 4, 54);
 
-//Unit 2
-IPAddress ip(10, 10, 4, 55);
+
+#ifdef UNIT1
+  //Unit 1
+  IPAddress ip(10, 10, 4, 54);
+  byte mac[] = { 0x5F, 0x53, 0x2F, 0x6C, 0xB1, 0xD0 };
+#else
+  //Unit 2
+  IPAddress ip(10, 10, 4, 55);
+  byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFA, 0xED };  
+#endif
 
 IPAddress gateway(10, 10, 4, 254);
 IPAddress subnet(255, 255, 255,0);
@@ -58,7 +65,7 @@ void setup() {
   sdiTallyControl.setOverride(true);                       // enable tally override
 
   sdiCameraControl.begin();                                 // initialize tally control
-  sdiCameraControl.setOverride(true);                       // enable tally override
+  sdiCameraControl.setOverride(false);                       // enable camera control override
 }
 
 void loop() {
