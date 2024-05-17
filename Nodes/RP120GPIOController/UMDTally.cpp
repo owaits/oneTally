@@ -20,6 +20,7 @@ void UMDTally::loop()
     if((packet.address & 0x80) == 0 && size == 18)
       return;
 
+
     byte address = (packet.address & 0x7F);
     if(address < 5)
     {
@@ -73,8 +74,11 @@ int UMDTally::getProgramTally()
   for(int address=0;address<5;address++)
   {
       if((tallyStatus[address] & 1) > 0)
+      {
         return address;
+      }        
   }
+
   return 0;
 }
 

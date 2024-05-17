@@ -30,14 +30,12 @@ you can keep a clear conscience: http://skaarhoj.com/about/licenses/
 #ifndef ATEMbase_h
 #define ATEMbase_h
 
-#include "Arduino.h"
-
 #ifdef ESP8266
 #include <WifiUDP.h>
 #elif defined(TEENSYDUINO)
 #include <NativeEthernet.h>
 #else
-#include <EthernetUdp.h>
+#include <UIPEthernet.h>
 #endif
 
 #include "SkaarhojPgmspace.h"

@@ -11,11 +11,11 @@ static void Url::Parse(const String& value, Url& newUrl, int offset)
 { 
   newUrl.url = value.substring(offset,value.indexOf(" ",offset));  
   
-  newUrl.queryStart = newUrl.url.indexOf("?");
+  newUrl.queryStart = newUrl.url.indexOf(F("?"));
   if(newUrl.queryStart == -1)
     newUrl.queryStart  = newUrl.url.length();
     
-  newUrl.pathEnd = newUrl.url.lastIndexOf("/",newUrl.queryStart);
+  newUrl.pathEnd = newUrl.url.lastIndexOf(F("/"),newUrl.queryStart);
   if(newUrl.pathEnd == -1)
     newUrl.pathEnd = 0;
 
@@ -24,7 +24,7 @@ static void Url::Parse(const String& value, Url& newUrl, int offset)
   int queryStart = newUrl.queryStart;
   while(queryStart != -1 && queryStart != newUrl.url.length() &&newUrl.argumentCount < 20)
   {
-    int queryEnd = newUrl.url.indexOf("&",queryStart + 1);
+    int queryEnd = newUrl.url.indexOf(F("&"),queryStart + 1);
     
     if(queryEnd != -1)
 	{
@@ -43,13 +43,14 @@ static void Url::Parse(const String& value, Url& newUrl, int offset)
 } 
 
 boolean Url::LookupArgument(const String& key,String& value)
-{  
+{
+  String argument;
   for(int n=0;n<argumentCount;n++)
   {
-	String argument = GetArgument(n);
+	  argument = GetArgument(n);
     if(argument.startsWith(key))
     {
-      value = argument.substring(argument.indexOf("=") + 1);
+      value = argument.substring(argument.indexOf(F("=")) + 1);
       return true;
     }      
   }
